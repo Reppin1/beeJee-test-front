@@ -11,6 +11,7 @@ import { useTypedDispatch } from "../../hooks/useTypedDispatch/useTypedDispatch"
 import { usePagination } from "../../hooks/usePagination/usePagination";
 import { Pagination } from "../atoms/Pagination/Pagination";
 import { useSort } from "../../hooks/useSort/useSort";
+import { toast } from "react-toastify";
 
 const MainPage = () => {
   const { items, sortBy, sort } = useTypedSelector((state) => state.ListReducer);
@@ -23,8 +24,15 @@ const MainPage = () => {
   }, [dispatch]);
 
   const updatedStatusTask = useCallback((id: number, status: boolean) => {
-    dispatch(updateStatusTask({id: id, status: status}));
-  }, [dispatch]);
+    if (user.login) {
+      dispatch(updateStatusTask({id: id, status: status}));
+    } else {
+      toast.error('Ошибка, недостаточно прав', {
+        autoClose: 3000,
+        draggable: true,
+      });
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     dispatch(authUser())

@@ -12,9 +12,10 @@ import { usePagination } from "../../hooks/usePagination/usePagination";
 import { Pagination } from "../atoms/Pagination/Pagination";
 import { useSort } from "../../hooks/useSort/useSort";
 import { toast } from "react-toastify";
+import { Loader } from "../atoms/Loader/Loader";
 
 const MainPage = () => {
-  const { items, sortBy, sort } = useTypedSelector((state) => state.ListReducer);
+  const { items, sortBy, sort, isLoading } = useTypedSelector((state) => state.ListReducer);
   const user = useTypedSelector((state) => state.AuthReducer.user);
   const dispatch = useTypedDispatch();
 
@@ -56,6 +57,10 @@ const MainPage = () => {
     contentPerPage: 3,
     count: items.length,
   });
+
+  if (isLoading) {
+    return <Loader center color="primary" />
+  }
 
   return (
     <div>

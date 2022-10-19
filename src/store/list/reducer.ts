@@ -29,7 +29,7 @@ const ListReducer = (state = initialState, action: FieldActionList) => {
     case SET_LOADING:
       return {...state, isLoading: true}
     case SET_CREATED_TASK:
-      return {...state, items: [action.payload, ...state.items]}
+      return {...state, items: [action.payload, ...state.items], isLoading: false}
     case SET_SORT:
       return {...state, sort: action.payload, sortBy: {DESC: false}}
     case "SET_SORT_BY":
